@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
-import * as THREE from 'three';
+import React, { useState, useEffect, useRef } from "react";
+import * as THREE from "three";
 
 const Portfolio3D = () => {
-  const [activeSection, setActiveSection] = useState('home');
+  const [activeSection, setActiveSection] = useState("home");
   const [isLoaded, setIsLoaded] = useState(false);
   const canvasRef = useRef(null);
   const sceneRef = useRef(null);
@@ -16,13 +16,18 @@ const Portfolio3D = () => {
     scene.fog = new THREE.Fog(0xe8e4dc, 10, 50);
     sceneRef.current = scene;
 
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    );
     camera.position.z = 30;
 
-    const renderer = new THREE.WebGLRenderer({ 
-      canvas: canvasRef.current, 
-      alpha: true, 
-      antialias: true 
+    const renderer = new THREE.WebGLRenderer({
+      canvas: canvasRef.current,
+      alpha: true,
+      antialias: true,
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -44,28 +49,29 @@ const Portfolio3D = () => {
 
     const meshes = [];
     for (let i = 0; i < 40; i++) {
-      const geometry = geometries[Math.floor(Math.random() * geometries.length)];
-      const material = new THREE.MeshPhongMaterial({ 
+      const geometry =
+        geometries[Math.floor(Math.random() * geometries.length)];
+      const material = new THREE.MeshPhongMaterial({
         color: colors[Math.floor(Math.random() * colors.length)],
         flatShading: true,
         transparent: true,
         opacity: 0.6,
       });
-      
+
       const mesh = new THREE.Mesh(geometry, material);
       mesh.position.x = (Math.random() - 0.5) * 50;
       mesh.position.y = (Math.random() - 0.5) * 50;
       mesh.position.z = (Math.random() - 0.5) * 50;
-      
+
       mesh.rotation.x = Math.random() * Math.PI;
       mesh.rotation.y = Math.random() * Math.PI;
-      
+
       mesh.userData.velocity = {
         x: (Math.random() - 0.5) * 0.01,
         y: (Math.random() - 0.5) * 0.01,
-        rotation: (Math.random() - 0.5) * 0.02
+        rotation: (Math.random() - 0.5) * 0.02,
       };
-      
+
       scene.add(mesh);
       meshes.push(mesh);
     }
@@ -87,7 +93,7 @@ const Portfolio3D = () => {
       mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
     };
 
-    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener("mousemove", onMouseMove);
 
     // Animation loop
     const animate = () => {
@@ -97,7 +103,7 @@ const Portfolio3D = () => {
       meshes.forEach((mesh) => {
         mesh.position.x += mesh.userData.velocity.x;
         mesh.position.y += mesh.userData.velocity.y;
-        
+
         mesh.rotation.x += mesh.userData.velocity.rotation;
         mesh.rotation.y += mesh.userData.velocity.rotation;
 
@@ -124,12 +130,12 @@ const Portfolio3D = () => {
       renderer.setSize(window.innerWidth, window.innerHeight);
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     // Cleanup
     return () => {
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("resize", handleResize);
       renderer.dispose();
     };
   }, []);
@@ -137,57 +143,72 @@ const Portfolio3D = () => {
   const projects = [
     {
       title: "Email Template Builder",
-      description: "Built from scratch using React, featuring drag-and-drop with Beautiful DND and rich text editing with TinyMCE. Full CRUD operations with JSON serialization.",
+      description:
+        "Built from scratch using React, featuring drag-and-drop with Beautiful DND and rich text editing with TinyMCE. Full CRUD operations with JSON serialization.",
       tags: ["React.js", "TypeScript", "Beautiful DND", "TinyMCE"],
       link: "https://app.engagebay.com/login#email-templates",
-      gradient: "linear-gradient(135deg, #8b9d83 0%, #a39b8b 100%)"
+      gradient: "linear-gradient(135deg, #8b9d83 0%, #a39b8b 100%)",
     },
     {
       title: "Chatbot Builder",
-      description: "Custom chatbot builder with React and Flow Library integration. Features multi-step flows, conditional responses, and smooth bot-to-agent escalation.",
+      description:
+        "Custom chatbot builder with React and Flow Library integration. Features multi-step flows, conditional responses, and smooth bot-to-agent escalation.",
       tags: ["React.js", "TypeScript", "Flow Library", "Bootstrap"],
       gradient: "linear-gradient(135deg, #9b8b7e 0%, #7e8b9b 100%)",
-      note: "Retired after ChatGPT's market entry"
+      note: "Retired after ChatGPT's market entry",
     },
     {
       title: "Untangle Mobile App",
-      description: "Cross-platform mobile app with React Native and Expo. Features authentication, prayer time monitoring with app blocking, and iOS widgets with Live Activities.",
+      description:
+        "Cross-platform mobile app with React Native and Expo. Features authentication, prayer time monitoring with app blocking, and iOS widgets with Live Activities.",
       tags: ["React Native", "Expo", "Swift", "iOS Widgets"],
-      gradient: "linear-gradient(135deg, #7e8b9b 0%, #8b9d83 100%)"
+      gradient: "linear-gradient(135deg, #7e8b9b 0%, #8b9d83 100%)",
     },
     {
       title: "Form Builder",
-      description: "Enhanced Vue 2 form builder with cross-mail compatibility, field validation, and dynamic customization capabilities.",
+      description:
+        "Enhanced Vue 2 form builder with cross-mail compatibility, field validation, and dynamic customization capabilities.",
       tags: ["Vue 2", "TypeScript", "Quasar"],
       link: "https://app.engagebay.com/login#add-new-form",
-      gradient: "linear-gradient(135deg, #a39b8b 0%, #9b8b7e 100%)"
-    }
+      gradient: "linear-gradient(135deg, #a39b8b 0%, #9b8b7e 100%)",
+    },
   ];
 
   const skills = [
-    { category: "Frontend", items: ["React.js", "React Native", "Vue 2", "Angular", "TypeScript"] },
-    { category: "Styling", items: ["Tailwind CSS", "Bootstrap", "SASS/SCSS", "Quasar"] },
-    { category: "State & Data", items: ["Redux", "RESTful APIs", "JSON", "AJAX"] },
+    {
+      category: "Frontend",
+      items: ["React.js", "React Native", "Vue 2", "Angular", "TypeScript"],
+    },
+    {
+      category: "Styling",
+      items: ["Tailwind CSS", "Bootstrap", "SASS/SCSS", "Quasar"],
+    },
+    {
+      category: "State & Data",
+      items: ["Redux", "RESTful APIs", "JSON", "AJAX"],
+    },
     { category: "Tools", items: ["Webpack", "Git/GitHub", "npm/yarn", "CLI"] },
   ];
 
   return (
     <div className="portfolio-container">
       <canvas ref={canvasRef} className="webgl-canvas" />
-      
+
       {/* Navigation */}
-      <nav className={`nav ${isLoaded ? 'loaded' : ''}`}>
+      <nav className={`nav ${isLoaded ? "loaded" : ""}`}>
         <div className="nav-brand">VM</div>
         <div className="nav-links">
-          {['home', 'about', 'projects', 'skills', 'contact'].map((section) => (
-            <a 
+          {["home", "about", "projects", "skills", "contact"].map((section) => (
+            <a
               key={section}
               href={`#${section}`}
-              className={activeSection === section ? 'active' : ''}
+              className={activeSection === section ? "active" : ""}
               onClick={(e) => {
                 e.preventDefault();
                 setActiveSection(section);
-                document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' });
+                document
+                  .getElementById(section)
+                  ?.scrollIntoView({ behavior: "smooth" });
               }}
             >
               {section}
@@ -197,7 +218,7 @@ const Portfolio3D = () => {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className={`hero ${isLoaded ? 'loaded' : ''}`}>
+      <section id="home" className={`hero ${isLoaded ? "loaded" : ""}`}>
         <div className="hero-content">
           <div className="hero-tag">Front-End Developer</div>
           <h1 className="hero-title">
@@ -205,11 +226,16 @@ const Portfolio3D = () => {
             <span className="line">Manna</span>
           </h1>
           <p className="hero-subtitle">
-            Crafting scalable web and mobile experiences with 4+ years of expertise in React, React Native, and modern frameworks
+            Crafting scalable web and mobile experiences with 4+ years of
+            expertise in React, React Native, and modern frameworks
           </p>
           <div className="hero-cta">
-            <a href="#projects" className="btn-primary">View Work</a>
-            <a href="#contact" className="btn-secondary">Get in Touch</a>
+            <a href="#projects" className="btn-primary">
+              View Work
+            </a>
+            <a href="#contact" className="btn-secondary">
+              Get in Touch
+            </a>
           </div>
         </div>
         <div className="scroll-indicator">
@@ -227,10 +253,15 @@ const Portfolio3D = () => {
           <div className="about-grid">
             <div className="about-text">
               <p className="large-text">
-                I'm a front-end developer specializing in building exceptional digital experiences. Currently pursuing my Master's in Computer Science at Concordia University Wisconsin.
+                I'm a front-end developer specializing in building exceptional
+                digital experiences. Currently pursuing my Master's in Computer
+                Science at Concordia University Wisconsin.
               </p>
               <p>
-                With over 4 years of experience, I've worked on everything from email template builders to cross-platform mobile applications. I'm passionate about creating intuitive, performant interfaces that users love.
+                With over 4 years of experience, I've worked on everything from
+                email template builders to cross-platform mobile applications.
+                I'm passionate about creating intuitive, performant interfaces
+                that users love.
               </p>
               <div className="stats">
                 <div className="stat">
@@ -251,17 +282,26 @@ const Portfolio3D = () => {
               <div className="highlight-card">
                 <div className="highlight-icon">🏆</div>
                 <h3>Star Employee 2023</h3>
-                <p>Recognized at EngageBay for exceptional contributions and leadership</p>
+                <p>
+                  Recognized at EngageBay for exceptional contributions and
+                  leadership
+                </p>
               </div>
               <div className="highlight-card">
                 <div className="highlight-icon">🎓</div>
                 <h3>Education</h3>
-                <p>Master's in Computer Science from Concordia University Wisconsin</p>
+                <p>
+                  Master's in Computer Science from Concordia University
+                  Wisconsin
+                </p>
               </div>
               <div className="highlight-card">
                 <div className="highlight-icon">💡</div>
                 <h3>Innovation</h3>
-                <p>Participated in Smart India Hackathon and Concordia Hackathon 2024</p>
+                <p>
+                  Participated in Smart India Hackathon and Concordia Hackathon
+                  2024
+                </p>
               </div>
             </div>
           </div>
@@ -277,23 +317,35 @@ const Portfolio3D = () => {
           </div>
           <div className="projects-grid">
             {projects.map((project, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="project-card"
-                style={{ '--delay': `${index * 0.1}s`, '--gradient': project.gradient }}
+                style={{
+                  "--delay": `${index * 0.1}s`,
+                  "--gradient": project.gradient,
+                }}
               >
                 <div className="project-gradient"></div>
                 <div className="project-content">
                   <h3>{project.title}</h3>
                   <p>{project.description}</p>
-                  {project.note && <p className="project-note">{project.note}</p>}
+                  {project.note && (
+                    <p className="project-note">{project.note}</p>
+                  )}
                   <div className="project-tags">
                     {project.tags.map((tag, i) => (
-                      <span key={i} className="tag">{tag}</span>
+                      <span key={i} className="tag">
+                        {tag}
+                      </span>
                     ))}
                   </div>
                   {project.link && (
-                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="project-link">
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="project-link"
+                    >
                       View Project →
                     </a>
                   )}
@@ -313,7 +365,11 @@ const Portfolio3D = () => {
           </div>
           <div className="skills-grid">
             {skills.map((skillGroup, index) => (
-              <div key={index} className="skill-group" style={{ '--delay': `${index * 0.1}s` }}>
+              <div
+                key={index}
+                className="skill-group"
+                style={{ "--delay": `${index * 0.1}s` }}
+              >
                 <h3>{skillGroup.category}</h3>
                 <div className="skill-items">
                   {skillGroup.items.map((skill, i) => (
@@ -339,19 +395,25 @@ const Portfolio3D = () => {
           <div className="contact-content">
             <div className="contact-text">
               <p className="large-text">
-                I'm currently looking for new opportunities. Whether you have a question or just want to say hi, feel free to reach out!
+                I'm currently looking for new opportunities. Whether you have a
+                question or just want to say hi, feel free to reach out!
               </p>
             </div>
             <div className="contact-info">
-              <a href="mailto:vivek.manna@cuw.edu" className="contact-item">
+              <a href="mailto:mannevivek21@gmail.com" className="contact-item">
                 <span className="contact-icon">✉</span>
-                <span>vivek.manna@cuw.edu</span>
+                <span>mannevivek21@gmail.com</span>
               </a>
               <a href="tel:+14146989598" className="contact-item">
                 <span className="contact-icon">📱</span>
                 <span>+1 (414) 698-9598</span>
               </a>
-              <a href="https://www.linkedin.com/in/manne-vivek-237195209/" target="_blank" rel="noopener noreferrer" className="contact-item">
+              <a
+                href="https://www.linkedin.com/in/manne-vivek-237195209/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contact-item"
+              >
                 <span className="contact-icon">💼</span>
                 <span>LinkedIn Profile</span>
               </a>
@@ -1023,5 +1085,3 @@ const Portfolio3D = () => {
 };
 
 export default Portfolio3D;
-
-
